@@ -1,22 +1,21 @@
 import {
     faBars,
-    faBell,
     faCoins,
     faEarthAsia,
     faEllipsisVertical,
     faGear,
-    faMessage,
     faSearch,
     faSignOut,
     faTicket,
-    faUser,
 } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faMessage, faUser } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css'; // optional
 import routes from '~/Routes/routes';
 import Menu from '~/components/Popper/Menu/menu';
+import Sidebar from './Sidebar';
 
 const currentUser = true;
 
@@ -63,7 +62,7 @@ const userMenu = [
     },
 ];
 
-function Header() {
+function Header({ toggleSidebar }) {
     const handleMenuChange = (menuItem) => {
         switch (menuItem.type) {
             case 'language':
@@ -74,19 +73,22 @@ function Header() {
     };
 
     return (
-        <header className="h-16 w-full flex justify-center bg-gradient-to-r from-blue-900 via-indigo-900 to-blue-800 text-white shadow-lg">
+        <header className="h-16 w-full flex justify-center bg-gradient-to-r from-gray-100 via-gray-300 to-gray-200 text-white shadow-lg">
             <div className="container mx-auto flex h-full items-center justify-between py-4 px-6">
                 {/* Logo */}
                 <div className="flex items-center gap-8">
-                    <button className="text-2xl hover:text-blue-300 transition-colors duration-200 cursor-pointer">
+                    <button
+                        onClick={toggleSidebar}
+                        className="text-2xl text-gray-800 hover:text-gray-600 transition-colors duration-200 cursor-pointer"
+                    >
                         <FontAwesomeIcon icon={faBars} />
                     </button>
                     <Link
                         className="flex items-center space-x-2 gap-2 transition-transform duration-300 hover:scale-105"
                         to={routes.dashboard}
                     >
-                        <FontAwesomeIcon icon={faTicket} className="text-3xl text-gray-300" />
-                        <span className="text-2xl font-extrabold tracking-tight text-gray-300">Tiflo</span>
+                        <FontAwesomeIcon icon={faTicket} className="text-3xl text-gray-800" />
+                        <span className="text-2xl font-extrabold tracking-tight text-gray-800">Tiflo</span>
                     </Link>
                 </div>
 
@@ -94,29 +96,29 @@ function Header() {
                 <div className="flex-1 max-w-lg mx-6">
                     <div className="flex">
                         <input
-                            className="w-[400px] min-w-72 overflow-hidden py-2 pl-6 flex items-center rounded-bl-full rounded-tl-full bg-gray-800 border-r border-gray-700 text-white outline-none"
+                            className="w-[400px] min-w-72 overflow-hidden py-2 pl-6 flex items-center rounded-bl-full rounded-tl-full border-1 border-r-0 bg-white border-gray-300 text-black outline-none"
                             spellCheck={false}
                             type="text"
                             placeholder="Search Personal Finance Tracker..."
                         />
-                        <button className="items-center right-3 w-14 h-100% bg-gray-800 text-xl rounded-br-full rounded-tr-full hover:bg-[#1a2331] cursor-pointer hover:text-gray-300 transition duration-300">
+                        <button className="items-center right-3 w-14 h-100% bg-gray-100 text-xl text-gray-700 rounded-br-full rounded-tr-full border-1 border-gray-300 hover:bg-gray-200 cursor-pointer hover:text-gray-500 transition duration-300">
                             <FontAwesomeIcon icon={faSearch} />
                         </button>
                     </div>
                 </div>
 
                 {/* Action */}
-                <div className="flex items-center">
+                <div className="flex items-center gap-3">
                     {currentUser ? (
                         <>
                             <Tippy delay={[0, 200]} content="Notification" placement="bottom">
-                                <button className="bg-transparent text-2xl px-3 py-1 cursor-pointer relative flex items-center justify-center">
+                                <button className="bg-transparent text-gray-700 text-2xl px-3 py-1 cursor-pointer relative flex items-center justify-center">
                                     <FontAwesomeIcon icon={faBell} />
                                 </button>
                             </Tippy>
 
                             <Tippy delay={[0, 200]} content="Message" placement="bottom">
-                                <button className="bg-transparent text-2xl px-3 py-1 cursor-pointer relative flex items-center justify-center">
+                                <button className="bg-transparent text-gray-700 text-2xl px-3 py-1 cursor-pointer relative flex items-center justify-center">
                                     <FontAwesomeIcon icon={faMessage} />
                                 </button>
                             </Tippy>
@@ -128,7 +130,7 @@ function Header() {
                     <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
                         {currentUser ? (
                             <FontAwesomeIcon
-                                className="bg-transparent text-2xl px-3 py-1 cursor-pointer relative flex items-center justify-center outline-none"
+                                className="bg-gray-500 text-white text-[1.2rem] rounded-full px-2 py-2 cursor-pointer relative flex items-center justify-center outline-none"
                                 icon={faUser}
                             />
                         ) : (

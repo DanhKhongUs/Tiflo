@@ -1,13 +1,33 @@
+import { useState } from 'react';
 import Header from './Header';
 import Sidebar from './Sidebar';
 
 function DefaultLayout({ children }) {
+    const [isSidebarOpen, setSidebarOpen] = useState(false);
+
+    const toggleSidebar = () => {
+        setSidebarOpen(!isSidebarOpen);
+    };
+
     return (
-        <div className="flex flex-col items-center">
-            <Header />
-            <div className="w-full flex">
-                <Sidebar />
-                <div className="flex-1 text-3xl font-bold">Home pages</div>
+        <div className="h-screen flex flex-col overflow-hidden">
+            {/* Header */}
+            <Header toggleSidebar={toggleSidebar} />
+
+            {/* Body */}
+            <div className="flex flex-1 overflow-hidden">
+                {/* Sidebar */}
+                <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+
+                {/* Main Content */}
+                <div
+                    className={`flex-1 transition-all duration-300 overflow-y-auto p-6 ${
+                        isSidebarOpen ? 'ml-64' : 'ml-0'
+                    }`}
+                >
+                    {/* Children hoặc nội dung chính */}
+                    <div className="text-3xl font-bold"></div>
+                </div>
             </div>
         </div>
     );
