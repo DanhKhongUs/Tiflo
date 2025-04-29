@@ -5,7 +5,6 @@ import {
     faEllipsisVertical,
     faGear,
     faSearch,
-    faSignOut,
     faTicket,
 } from '@fortawesome/free-solid-svg-icons';
 import { faBell, faMessage, faUser } from '@fortawesome/free-regular-svg-icons';
@@ -45,6 +44,7 @@ const userMenu = [
     {
         icon: <FontAwesomeIcon icon={faUser} />,
         title: 'View Profile',
+        to: '/@danh',
     },
     ...MENU_ITEMS,
     {
@@ -54,11 +54,6 @@ const userMenu = [
     {
         icon: <FontAwesomeIcon icon={faGear} />,
         title: 'Settings',
-    },
-    {
-        icon: <FontAwesomeIcon icon={faSignOut} />,
-        title: 'Log out',
-        separate: true,
     },
 ];
 

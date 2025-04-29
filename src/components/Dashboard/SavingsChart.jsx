@@ -7,9 +7,9 @@ const data = [
 ];
 
 const SavingsChart = () => (
-    <div className="bg-[#111] p-4 rounded-xl text-white w-full h-[300px]">
-        <h3 className="text-white mb-4 flex items-center gap-2">📈 2025 Savings</h3>
-        <ResponsiveContainer width="100%" height="100%">
+    <div className="bg-gray-900 text-sm p-4 rounded-xl text-white w-[700px] h-full">
+        <h3 className="text-white text-2xl mb-4 flex items-center gap-2">📈 2025 Savings</h3>
+        <ResponsiveContainer width="100%" height={450}>
             <AreaChart data={data}>
                 <defs>
                     <linearGradient id="colorSavings" x1="0" y1="0" x2="0" y2="1">

@@ -8,7 +8,9 @@ import {
     faHouse,
     faRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import routes from '~/Routes/routes';
 
 function Sidebar({ isOpen, toggleSidebar }) {
     return (
@@ -29,51 +31,70 @@ function Sidebar({ isOpen, toggleSidebar }) {
                     </div>
                     <div className="ml-3">
                         <p className="text-sm font-semibold">Quản lý tài chính</p>
-                        <p className="text-xs text-gray-400">Tiền Kim</p>
+                        <p className="text-xs text-gray-400">Nguyen Thanh Danh</p>
                     </div>
-                    <button onClick={toggleSidebar} className="ml-auto text-gray-400">
+                    <button
+                        onClick={toggleSidebar}
+                        className="ml-auto p-2 text-gray-500 hover:text-gray-400 cursor-pointer"
+                    >
                         <FontAwesomeIcon icon={faAnglesLeft} />
                     </button>
                 </div>
 
                 {/* Menu Items */}
-                <div className="p-4">
-                    <p className="text-xs text-green-400 font-semibold mb-2">TỔNG QUAN</p>
-                    <ul>
-                        <li className="flex items-center gap-2 p-2 hover:bg-gray-800 rounded cursor-pointer">
+                <div className="p-6">
+                    <h1 className="text-xs text-green-400 font-semibold mb-2">TỔNG QUAN</h1>
+
+                    <div>
+                        <Link
+                            to={routes.dashboard}
+                            className="flex items-center gap-2 p-2 hover:bg-gray-800 rounded cursor-pointer"
+                        >
                             <FontAwesomeIcon icon={faHouse} />
                             Trang chủ
-                        </li>
-                        <li className="flex items-center gap-2 p-2 hover:bg-gray-800 rounded cursor-pointer">
+                        </Link>
+                        <Link
+                            to={routes.category}
+                            className="flex items-center gap-2 p-2 hover:bg-gray-800 rounded cursor-pointer"
+                        >
                             <FontAwesomeIcon icon={faFolderClosed} />
                             Danh mục
-                        </li>
-                        <li className="flex items-center gap-2 p-2 hover:bg-gray-800 rounded cursor-pointer">
+                        </Link>
+                        <Link
+                            to={routes.transaction}
+                            className="flex items-center gap-2 p-2 hover:bg-gray-800 rounded cursor-pointer"
+                        >
                             <FontAwesomeIcon icon={faArrowRightArrowLeft} />
                             Giao dịch
-                        </li>
-                    </ul>
+                        </Link>
+                    </div>
 
-                    <p className="text-xs text-green-400 font-semibold mt-4 mb-2">TIỀN ÍCH</p>
-                    <ul>
-                        <li className="flex items-center gap-2 p-2 hover:bg-gray-800 rounded cursor-pointer">
+                    <h1 className="text-xs text-green-400 font-semibold mt-4 mb-2">TIỆN ÍCH</h1>
+                    <div>
+                        <Link
+                            to={routes.statistical}
+                            className="flex items-center gap-2 p-2 hover:bg-gray-800 rounded cursor-pointer"
+                        >
                             <FontAwesomeIcon icon={faChartSimple} />
-                            Báo cáo
-                        </li>
-                        <li className="flex items-center gap-2 p-2 hover:bg-gray-800 rounded cursor-pointer">
+                            Thống kê
+                        </Link>
+                        <Link
+                            to={routes.setting}
+                            className="flex items-center gap-2 p-2 hover:bg-gray-800 rounded cursor-pointer"
+                        >
                             <FontAwesomeIcon icon={faGear} />
                             Cài đặt
-                        </li>
-                        <li className="flex items-center gap-2 p-2 hover:bg-gray-800 rounded cursor-pointer">
+                        </Link>
+                        <Link className="flex items-center gap-2 p-2 hover:bg-gray-800 rounded cursor-pointer">
                             <FontAwesomeIcon icon={faRightFromBracket} />
                             Đăng xuất
-                        </li>
-                    </ul>
+                        </Link>
+                    </div>
                 </div>
             </div>
 
             {/* Overlay */}
-            {isOpen && <div className="fixed inset-0 bg-black opacity-50 z-30" onClick={toggleSidebar}></div>}
+            {/* {isOpen && <div className="fixed inset-0 bg-black opacity-50 z-30" onClick={toggleSidebar}></div>} */}
         </div>
     );
 }
