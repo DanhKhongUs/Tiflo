@@ -4,6 +4,7 @@ import SignIn from '~/pages/SignIn';
 import SignUp from '~/pages/SignUp';
 import Dashboard from '~/pages/Dashboard';
 import Category from '~/pages/Category';
+import Transaction from '~/pages/Transaction';
 import Statistical from '~/pages/Statistical';
 import Report from '~/pages/Report';
 import Setting from '~/pages/Setting';
@@ -13,6 +14,7 @@ const publicRoutes = [
     { path: routes.signin, component: SignIn },
     { path: routes.signup, component: SignUp },
     { path: routes.category, component: Category },
+    { path: routes.transaction, component: Transaction },
     { path: routes.statistical, component: Statistical },
     { path: routes.report, component: Report },
     { path: routes.setting, component: Setting },
