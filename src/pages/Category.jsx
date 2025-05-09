@@ -1,5 +1,11 @@
+import CategoryList from '~/components/Category/CategoryList';
+
 function Category() {
-    return <h2>Category pages</h2>;
+    return (
+        <div className="px-18 py-6 md:grid-cols-3 gap-6 text-black bg-white min-h-screen">
+            <CategoryList />
+        </div>
+    );
 }
 
 export default Category;

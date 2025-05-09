@@ -7,8 +7,8 @@ const data = [
 ];
 
 const SavingsChart = () => (
-    <div className="bg-gray-900 text-sm p-4 rounded-xl text-white w-[700px] h-full">
-        <h3 className="text-white text-2xl mb-4 flex items-center gap-2">📈 2025 Savings</h3>
+    <div className="bg-gray-300 text-sm p-4 rounded-xl text-white w-[750px] h-full">
+        <h3 className="text-gray-800 text-2xl mb-4 flex items-center gap-2">📈 2025 Savings</h3>
         <ResponsiveContainer width="100%" height={450}>
             <AreaChart data={data}>
                 <defs>

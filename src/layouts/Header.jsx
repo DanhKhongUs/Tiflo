@@ -79,11 +79,11 @@ function Header({ toggleSidebar }) {
                         <FontAwesomeIcon icon={faBars} />
                     </button>
                     <Link
-                        className="flex items-center space-x-2 gap-2 transition-transform duration-300 hover:scale-105"
+                        className="flex items-center space-x-2 gap-1 transition-transform duration-300 hover:scale-105"
                         to={routes.dashboard}
                     >
-                        <FontAwesomeIcon icon={faTicket} className="text-3xl text-gray-800" />
-                        <span className="text-2xl font-extrabold tracking-tight text-gray-800">Tiflo</span>
+                        <FontAwesomeIcon icon={faTicket} className="text-3xl text-gray-600" />
+                        <span className="text-2xl font-extrabold tracking-tight text-gray-600">Tiflo</span>
                     </Link>
                 </div>
 

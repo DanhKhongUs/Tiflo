@@ -14,7 +14,6 @@ function DefaultLayout({ children }) {
             {/* Header */}
             <Header toggleSidebar={toggleSidebar} />
 
-            {/* Body */}
             <div className="flex flex-1 overflow-hidden">
                 {/* Sidebar */}
                 <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
@@ -25,7 +24,6 @@ function DefaultLayout({ children }) {
                         isSidebarOpen ? 'ml-68' : 'ml-0'
                     }`}
                 >
-                    {/* Children hoặc nội dung chính */}
                     <div className="text-3xl font-bold">{children}</div>
                 </div>
             </div>
