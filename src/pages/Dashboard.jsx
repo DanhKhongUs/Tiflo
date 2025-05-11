@@ -1,6 +1,7 @@
 import OverviewCard from '~/components/Dashboard/OverviewCard';
 import SavingsChart from '~/components/Dashboard/SavingsChart';
 import DonutChart from '~/components/Dashboard/DonutChart';
+import RecentTransactions from '~/components/RecentTransactions/RecentTransactions';
 
 const incomeData = [
     { name: 'Salary', value: 15000 },
@@ -18,7 +19,7 @@ const expenseData = [
 
 const expenseColors = ['#ff5f5f', '#e74c3c', '#ff7979', '#c0392b'];
 
-export default function Dashboard() {
+function Dashboard() {
     return (
         <div className="px-8 md:grid-cols-3 gap-6 text-white bg-white min-h-screen">
             <div className="flex md:grid-cols-3 gap-6 mb-6">
@@ -48,6 +49,12 @@ export default function Dashboard() {
                     />
                 </div>
             </div>
+
+            <div>
+                <RecentTransactions />
+            </div>
         </div>
     );
 }
+
+export default Dashboard;

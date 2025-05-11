@@ -29,13 +29,13 @@ function TransactionForm({ onSubmit }) {
     };
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-2xl">
-            <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl flex flex-col gap-4 shadow">
+        <div className="flex flex-col md:flex-row gap-6 text-2xl">
+            <form onSubmit={handleSubmit} className="flex-1 bg-[#f9fafb] p-6 rounded-xl flex flex-col gap-4 shadow-md">
                 <div className="flex bg-gray-200 rounded-lg overflow-hidden">
                     <button
                         type="button"
                         className={`flex-1 py-2 font-semibold cursor-pointer ${
-                            type === 'Expense' ? 'bg-red-500 text-white' : 'text-gray-700 hover:bg-gray-300'
+                            type === 'Expense' ? 'bg-[#ef4444] text-white' : 'text-gray-700 hover:bg-gray-300'
                         }`}
                         onClick={() => setType('Expense')}
                     >
@@ -44,13 +44,14 @@ function TransactionForm({ onSubmit }) {
                     <button
                         type="button"
                         className={`flex-1 py-2 font-semibold cursor-pointer ${
-                            type === 'Income' ? 'bg-green-500 text-white' : 'text-gray-700 hover:bg-gray-300'
+                            type === 'Income' ? 'bg-[#22c55e] text-white' : 'text-gray-700 hover:bg-gray-300'
                         }`}
                         onClick={() => setType('Income')}
                     >
                         Thu nhập
                     </button>
                 </div>
+
                 <div>
                     <label className="block text-gray-600 text-sm mb-1">Thời gian</label>
                     <input
@@ -65,10 +66,16 @@ function TransactionForm({ onSubmit }) {
                     <label className="block text-gray-600 text-sm mb-1">Danh mục</label>
                     <input
                         type="text"
+                        className="w-full text-[1.2rem] px-2 py-2 bg-gray-100 text-gray-800 focus:outline-blue-400"
                         placeholder="Nhập danh mục"
                         value={transaction}
-                        onChange={(e) => setTransaction(e.target.value)}
-                        className="w-full text-[1.2rem] px-2 py-2 bg-gray-100 text-gray-800 focus:outline-blue-400"
+                        onChange={(e) => {
+                            const nameValue = e.target.value;
+                            if (!nameValue.startsWith(' ')) {
+                                setTransaction(nameValue);
+                            }
+                        }}
+                        required
                     />
                 </div>
 
@@ -92,7 +99,12 @@ function TransactionForm({ onSubmit }) {
                     <textarea
                         className="w-full text-[1.2rem] bg-gray-100 px-3 py-2 rounded text-gray-800 border border-gray-300 focus:outline-blue-400"
                         value={note}
-                        onChange={(e) => setNote(e.target.value)}
+                        onChange={(e) => {
+                            const noteValue = e.target.value;
+                            if (!noteValue.startsWith(' ')) {
+                                setNote(noteValue);
+                            }
+                        }}
                         placeholder="Nhập ghi chú"
                         rows={2}
                     />
@@ -106,7 +118,7 @@ function TransactionForm({ onSubmit }) {
                 </button>
             </form>
 
-            <div className="bg-blue-100 shadow-inner text-6xl text-gray-700 rounded-xl flex items-center justify-center">
+            <div className="flex-1 bg-blue-100 shadow-inner text-6xl text-gray-700 rounded-xl flex items-center justify-center">
                 <FontAwesomeIcon icon={faMoneyBillTransfer} />
             </div>
         </div>

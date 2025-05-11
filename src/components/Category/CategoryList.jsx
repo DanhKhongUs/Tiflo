@@ -1,19 +1,55 @@
 import { useState } from 'react';
 import CategoryForm from './CategoryForm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenToSquare, faShapes, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faPenToSquare, faShapes, faTrash } from '@fortawesome/free-solid-svg-icons';
 
-const sampleData = [
-    { name: 'Đi làm', type: 'Income' },
-    { name: 'Kinh doanh', type: 'Income' },
-    { name: 'Cho thuê máy móc', type: 'Income' },
-    { name: 'đi ăn', type: 'Expense' },
-    { name: 'đi shopping', type: 'Expense' },
-];
-
-const CategoryList = () => {
+function CategoryList() {
     const [showForm, setShowForm] = useState(false);
-    const [categories, setCategories] = useState(sampleData);
+    const [categories, setCategories] = useState(() => {
+        try {
+            const storageCat = JSON.parse(localStorage.getItem('categories')) || [];
+            return storageCat;
+        } catch (error) {
+            console.log('Failed to load category from localStorage', error);
+            return [];
+        }
+    });
+
+    const [editIndex, setEditIndex] = useState(null);
+    const [editText, setEditText] = useState('');
+
+    //Handle event
+    const handleDelete = (index) => {
+        const deleteItem = categories.filter((_, i) => i !== index);
+        setCategories(deleteItem);
+        localStorage.setItem('categories', JSON.stringify(deleteItem));
+    };
+
+    const handleEdit = (index) => {
+        const category = categories[index];
+        if (!category) {
+            console.error(`Không tìm thấy danh mục tại index ${index}`);
+            return;
+        }
+
+        setEditIndex(index);
+        setEditText(category.name);
+    };
+
+    const handleSave = (index) => {
+        if (editIndex === null || !editText.trim()) return;
+
+        const updated = [...categories];
+        updated[index].name = editText;
+        setCategories(updated);
+        localStorage.setItem('categories', JSON.stringify(updated));
+        setEditIndex(null);
+        setEditText('');
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') handleSave();
+    };
 
     return (
         <div className="bg-gray-100 rounded-2xl p-6 shadow-md">
@@ -27,38 +63,65 @@ const CategoryList = () => {
                 </button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="flex flex-col md:flex-row gap-6">
                 {/* Danh sách */}
-                <div className="bg-white rounded-xl p-4 shadow">
-                    <table className="w-full text-sm">
+                <div className="bg-white rounded-xl p-4 shadow w-full md:w-1/2 min-w-[300px] max-w-full space-y-3 max-h-120 overflow-y-auto">
+                    <table className="w-full text-sm table-fixed">
                         <thead>
                             <tr className="text-left text-gray-500 border-b border-gray-200">
-                                <th className="py-2">Danh mục</th>
-                                <th className="py-2">Kiểu</th>
-                                <th className="py-2">Hành động</th>
+                                <th className="py-2 w-2/5">Danh mục</th>
+                                <th className="py-2 px-4 w-1/5">Kiểu</th>
+                                <th className="py-2 px-18 w-2/5">Hành động</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {categories.map((categorie, index) => (
-                                <tr key={index} className="border-b text-gray-700 border-gray-200">
-                                    <td className="py-2">
-                                        {categorie.icon} {categorie.name}
+                            {categories.map((category, index) => (
+                                <tr key={index} className="border-b text-[1.1rem] text-gray-700 border-gray-200">
+                                    <td className="py-2 truncate">
+                                        {editIndex === index ? (
+                                            <input
+                                                type="text"
+                                                value={editText}
+                                                onChange={(e) => setEditText(e.target.value)}
+                                                onKeyDown={(e) => handleKeyDown(e, index)}
+                                                className="w-full outline-none bg-gray-100 text-gray-700 border border-gray-500 p-2 rounded box-border"
+                                            />
+                                        ) : (
+                                            <span className="truncate">
+                                                {category.icon} {category.name}
+                                            </span>
+                                        )}
                                     </td>
-                                    <td className="py-2">
+                                    <td className="py-2 px-4 truncate">
                                         <span
                                             className={`px-2 py-1 rounded text-sm font-semibold text-white ${
-                                                categorie.type === 'Income' ? 'bg-green-500' : 'bg-red-500'
+                                                category.type === 'Income' ? 'bg-green-500' : 'bg-red-500'
                                             }`}
                                         >
-                                            {categorie.type}
+                                            {category.type}
                                         </span>
                                     </td>
-                                    <td className="py-2">
-                                        <div className="flex gap-2">
-                                            <button className="bg-blue-500 p-2 text-white text-[1.1rem] rounded hover:bg-blue-600 cursor-pointer">
-                                                <FontAwesomeIcon icon={faPenToSquare} />
-                                            </button>
-                                            <button className="bg-red-500 p-2 text-white text-[1.1rem] rounded hover:bg-red-600 cursor-pointer">
+                                    <td className="py-2 px-18">
+                                        <div className="flex gap-2 justify-start">
+                                            {editIndex === index ? (
+                                                <button
+                                                    className="bg-blue-500 p-2 text-white text-[1.1rem] rounded hover:bg-blue-600 cursor-pointer"
+                                                    onClick={() => handleSave(index)}
+                                                >
+                                                    <FontAwesomeIcon icon={faCheck} />
+                                                </button>
+                                            ) : (
+                                                <button
+                                                    onClick={() => handleEdit(index)}
+                                                    className="bg-blue-500 p-2 text-white text-[1.1rem] rounded hover:bg-blue-600 cursor-pointer"
+                                                >
+                                                    <FontAwesomeIcon icon={faPenToSquare} />
+                                                </button>
+                                            )}
+                                            <button
+                                                onClick={() => handleDelete(index)}
+                                                className="bg-red-500 p-2 text-white text-[1.1rem] rounded hover:bg-red-600 cursor-pointer"
+                                            >
                                                 <FontAwesomeIcon icon={faTrash} />
                                             </button>
                                         </div>
@@ -67,22 +130,10 @@ const CategoryList = () => {
                             ))}
                         </tbody>
                     </table>
-
-                    <div className="mt-4 text-gray-600 text-sm flex justify-between items-center">
-                        <div className="flex gap-1">
-                            <button>{`<<`}</button>
-                            <button>{`<`}</button>
-                            <button className="bg-gray-300 px-2 rounded text-gray-800">1</button>
-                            <button className="text-gray-700">2</button>
-                            <button>{`>`}</button>
-                            <button>{`>>`}</button>
-                        </div>
-                        <div>1 of 2 pages (10 items)</div>
-                    </div>
                 </div>
 
                 {/* Biểu tượng */}
-                <div className="bg-blue-100 shadow-inner text-6xl text-blue-600 rounded-xl flex items-center justify-center">
+                <div className="bg-blue-100 shadow-inner text-6xl text-blue-600 rounded-xl flex items-center justify-center w-full md:w-1/2 min-w-[300px] max-w-full">
                     <FontAwesomeIcon icon={faShapes} />
                 </div>
             </div>
@@ -91,7 +142,9 @@ const CategoryList = () => {
                 <div className="mt-8">
                     <CategoryForm
                         onSubmit={(category) => {
-                            setCategories([...categories, category]);
+                            const newList = [...categories, category];
+                            setCategories(newList);
+                            localStorage.setItem('categories', JSON.stringify(newList));
                             setShowForm(false);
                         }}
                     />
@@ -99,6 +152,6 @@ const CategoryList = () => {
             )}
         </div>
     );
-};
+}
 
 export default CategoryList;

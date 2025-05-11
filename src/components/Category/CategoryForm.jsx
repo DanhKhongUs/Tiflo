@@ -2,17 +2,18 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShapes } from '@fortawesome/free-solid-svg-icons';
 
-const CategoryForm = ({ onSubmit }) => {
+function CategoryForm({ onSubmit }) {
     const [type, setType] = useState('Expense');
     const [name, setName] = useState('');
-    const [icon, setIcon] = useState('');
+    const [number, setNumber] = useState('');
 
+    //Handle event
     const handleSubmit = (e) => {
         e.preventDefault();
-        const newCategory = { name, icon, type };
+        const newCategory = { name, number, type };
         onSubmit?.(newCategory);
         setName('');
-        setIcon('');
+        setNumber('');
         setType('Expense');
     };
 
@@ -47,7 +48,12 @@ const CategoryForm = ({ onSubmit }) => {
                         className="w-full text-[1.2rem] bg-gray-100 px-3 py-2 rounded text-gray-800 border border-gray-300 focus:outline-blue-400"
                         value={name}
                         placeholder="Nhập tên danh mục"
-                        onChange={(e) => setName(e.target.value)}
+                        onChange={(e) => {
+                            const nameValue = e.target.value;
+                            if (!nameValue.startsWith(' ')) {
+                                setName(nameValue);
+                            }
+                        }}
                         required
                     />
                 </div>
@@ -57,9 +63,14 @@ const CategoryForm = ({ onSubmit }) => {
                     <input
                         type="text"
                         className="w-full text-[1.2rem] bg-gray-100 px-3 py-2 rounded text-gray-800 border border-gray-300 focus:outline-blue-400"
-                        value={icon}
-                        onChange={(e) => setIcon(e.target.value)}
-                        placeholder="Nhập biểu tượng"
+                        value={number}
+                        onChange={(e) => {
+                            const numberValue = e.target.value;
+                            if (!numberValue.startsWith(' ')) {
+                                setNumber(numberValue);
+                            }
+                        }}
+                        placeholder="Nhập số thứ tự"
                         required
                     />
                 </div>
@@ -73,7 +84,7 @@ const CategoryForm = ({ onSubmit }) => {
             </form>
 
             <div className="bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-6xl shadow-inner">
-                {icon || (
+                {number || (
                     <span className="text-gray-500">
                         <FontAwesomeIcon icon={faShapes} />
                     </span>
@@ -81,6 +92,6 @@ const CategoryForm = ({ onSubmit }) => {
             </div>
         </div>
     );
-};
+}
 
 export default CategoryForm;
