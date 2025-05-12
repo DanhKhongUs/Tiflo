@@ -10,12 +10,12 @@ import {
 import { faBell, faMessage, faUser } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css'; // optional
 import routes from '~/Routes/routes';
 import Menu from '~/components/Popper/Menu/menu';
-
-const currentUser = true;
+import { useAuth } from '~/hooks/useAuth';
 
 const MENU_ITEMS = [
     {
@@ -57,10 +57,19 @@ const userMenu = [
 ];
 
 function Header({ toggleSidebar }) {
+    const navigate = useNavigate();
+    const { state, dispatch } = useAuth();
+    const currentUser = state.user;
+
     const handleMenuChange = (menuItem) => {
         switch (menuItem.type) {
             case 'language':
                 // handle language
+                break;
+            case 'logout':
+                dispatch({ type: 'LOGOUT' });
+                localStorage.removeItem('currentUser'); // xoá khỏi localStorage
+                navigate('/signin'); // điều hướng về trang đăng nhập
                 break;
             default:
         }
@@ -118,7 +127,7 @@ function Header({ toggleSidebar }) {
                             </Tippy>
                         </>
                     ) : (
-                        <button>Log in</button>
+                        <Link to={routes.signin}>Log in</Link>
                     )}
 
                     <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>

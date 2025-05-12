@@ -8,26 +8,38 @@ import {
     faHouse,
     faRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import routes from '~/Routes/routes';
+import { useAuth } from '~/hooks/useAuth'; // nhớ import hook này
 
 function Sidebar({ isOpen, toggleSidebar }) {
+    const navigate = useNavigate();
+    const { dispatch } = useAuth();
+
+    const handleLogOut = (type) => {
+        switch (type) {
+            case 'logout':
+                dispatch({ type: 'LOGOUT' });
+                localStorage.removeItem('currentUser');
+                navigate('/signin');
+                break;
+            default:
+                break;
+        }
+    };
+
     return (
         <div className="relative">
-            {/* Sidebar */}
             <div
                 className={`fixed top-0 left-0 h-full w-80 bg-gray-900 text-white transform ${
                     isOpen ? 'translate-x-0' : '-translate-x-full'
                 } transition-transform duration-300 ease-in-out z-40`}
             >
-                {/* Header */}
                 <div className="flex items-center p-4 border-b border-gray-700">
                     <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center">
-                        <FontAwesomeIcon
-                            className="bg-blue-500 text-white text-[1.2rem] rounded-full px-2 py-2 cursor-pointer relative flex items-center justify-center outline-none"
-                            icon={faUser}
-                        />
+                        <FontAwesomeIcon className="text-white text-[1.2rem]" icon={faUser} />
                     </div>
                     <div className="ml-3">
                         <p className="text-sm font-semibold">Quản lý tài chính</p>
@@ -41,7 +53,6 @@ function Sidebar({ isOpen, toggleSidebar }) {
                     </button>
                 </div>
 
-                {/* Menu Items */}
                 <div className="p-6">
                     <h1 className="text-xs text-green-400 font-semibold mb-2">TỔNG QUAN</h1>
 
@@ -85,16 +96,16 @@ function Sidebar({ isOpen, toggleSidebar }) {
                             <FontAwesomeIcon icon={faGear} />
                             Cài đặt
                         </Link>
-                        <Link className="flex items-center gap-2 p-2 hover:bg-gray-800 rounded cursor-pointer">
+                        <button
+                            onClick={() => handleLogOut('logout')}
+                            className="flex items-center gap-2 p-2 hover:bg-gray-800 rounded cursor-pointer w-full text-left"
+                        >
                             <FontAwesomeIcon icon={faRightFromBracket} />
                             Đăng xuất
-                        </Link>
+                        </button>
                     </div>
                 </div>
             </div>
-
-            {/* Overlay */}
-            {/* {isOpen && <div className="fixed inset-0 bg-black opacity-50 z-30" onClick={toggleSidebar}></div>} */}
         </div>
     );
 }

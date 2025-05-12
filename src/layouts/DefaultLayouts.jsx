@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
+import { useLocation } from 'react-router-dom';
 
 function DefaultLayout({ children }) {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -10,24 +11,30 @@ function DefaultLayout({ children }) {
         setSidebarOpen(!isSidebarOpen);
     };
 
+    const location = useLocation();
+    const isAuthPage = ['/signin', 'signup'].includes(location.pathname);
+
     return (
-        <div className="h-screen flex flex-col overflow-hidden">
+        <div className="min-h-screen flex flex-col overflow-hidden">
             {/* Header */}
-            <Header toggleSidebar={toggleSidebar} />
+            {!isAuthPage && <Header toggleSidebar={toggleSidebar} />}
 
             <div className="flex flex-1 overflow-hidden">
                 {/* Sidebar */}
-                <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+                {!isAuthPage && <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />}
 
                 {/* Main Content */}
-                <div
+                <main
                     className={`flex-1 transition-all duration-300 overflow-y-auto p-6 ${
                         isSidebarOpen ? 'ml-68' : 'ml-0'
                     }`}
                 >
-                    <div className="text-3xl font-bold">{children}</div>
-                </div>
+                    {children}
+                </main>
             </div>
+
+            {/* Footer */}
+            {!isAuthPage && <Footer className="mt-auto" />}
         </div>
     );
 }
