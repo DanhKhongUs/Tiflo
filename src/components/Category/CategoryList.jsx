@@ -87,9 +87,7 @@ function CategoryList() {
                                                 className="w-full outline-none bg-gray-100 text-gray-700 border border-gray-500 p-2 rounded box-border"
                                             />
                                         ) : (
-                                            <span className="truncate">
-                                                {category.icon} {category.name}
-                                            </span>
+                                            <span className="truncate">{category.name}</span>
                                         )}
                                     </td>
                                     <td className="py-2 px-4 truncate">

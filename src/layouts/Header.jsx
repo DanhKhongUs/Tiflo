@@ -14,7 +14,6 @@ import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css'; // optional
 import routes from '~/Routes/routes';
 import Menu from '~/components/Popper/Menu/menu';
-import Sidebar from './Sidebar';
 
 const currentUser = true;
 

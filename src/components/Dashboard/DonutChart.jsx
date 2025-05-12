@@ -1,6 +1,6 @@
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 
-const DonutChart = ({ data, total, colorSet, title }) => {
+function DonutChart({ data, total, colorSet, title }) {
     return (
         <div className="bg-gray-200 p-4 rounded-xl w-full h-[530px] flex flex-col justify-between text-gray-800">
             <h3 className="mb-4 text-center text-lg font-semibold text-gray-700">{title}</h3>
@@ -45,6 +45,6 @@ const DonutChart = ({ data, total, colorSet, title }) => {
             </div>
         </div>
     );
-};
+}
 
 export default DonutChart;
