@@ -23,7 +23,8 @@ function Sidebar({ isOpen, toggleSidebar }) {
             case 'logout':
                 dispatch({ type: 'LOGOUT' });
                 localStorage.removeItem('currentUser');
-                navigate('/signin');
+                toggleSidebar();
+                navigate(routes.landing);
                 break;
             default:
                 break;

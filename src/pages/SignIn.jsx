@@ -19,18 +19,26 @@ function SignIn() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const users = JSON.parse(localStorage.getItem('users')) || [];
-        const user = users.find((u) => u.username === form.username && u.password === form.password);
+        try {
+            // Lấy danh sách users từ localStorage
+            const users = JSON.parse(localStorage.getItem('users')) || [];
 
-        if (user) {
-            dispatch({ type: 'LOGIN', payload: user });
+            // Kiểm tra username trùng lặp
+            const user = users.find((u) => u.username === form.username && u.password === form.password);
 
-            // Lưu thông tin người dùng vào localStorage
-            localStorage.setItem('currentUser', JSON.stringify(user));
+            if (user) {
+                dispatch({ type: 'LOGIN', payload: user });
 
-            navigate(routes.dashboard);
-        } else {
-            alert('Invalid username or password');
+                // Lưu thông tin người dùng vào localStorage
+                localStorage.setItem('currentUser', JSON.stringify(user));
+
+                navigate(routes.dashboard);
+            } else {
+                alert('Invalid username or password');
+            }
+        } catch (error) {
+            console.error('Error during sign-in:', error);
+            alert('An error occurred during sign-in. Please try again.');
         }
     };
 

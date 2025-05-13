@@ -3,6 +3,7 @@ import SavingsChart from '~/components/Dashboard/SavingsChart';
 import DonutChart from '~/components/Dashboard/DonutChart';
 import RecentTransactions from '~/components/RecentTransactions/RecentTransactions';
 import { useState, useEffect } from 'react';
+import Footer from '~/layouts/Footer';
 
 const incomeData = [
     { name: 'Salary', value: 15000 },
@@ -38,14 +39,14 @@ function Dashboard() {
     const balance = income - expense;
 
     return (
-        <div className="px-8 md:grid-cols-3 gap-6 text-white bg-white min-h-screen">
-            <div className="flex md:grid-cols-3 gap-6 mb-6">
+        <div className="mt-6 md:grid-cols-3 gap-6 text-white bg-white min-h-screen">
+            <div className="flex px-14 md:grid-cols-3 gap-6 mb-6">
                 <OverviewCard title="Tổng Thu Nhập" amount={`$${income}`} color="#119d50" />
                 <OverviewCard title="Tổng Chi Tiêu" amount={`$${expense}`} color="#F44336" />
                 <OverviewCard title="Số Dư" amount={`$${balance}`} color="#2196F3" />
             </div>
 
-            <div className="flex gap-6 justify-between items-center">
+            <div className="flex px-14 gap-6 justify-between items-center">
                 <div className="flex-1">
                     <SavingsChart />
                 </div>
@@ -67,8 +68,12 @@ function Dashboard() {
                 </div>
             </div>
 
-            <div>
+            <div className="px-14">
                 <RecentTransactions />
+            </div>
+
+            <div className="mt-8">
+                <Footer />
             </div>
         </div>
     );

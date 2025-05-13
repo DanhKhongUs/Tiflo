@@ -1,8 +1,11 @@
 function Footer() {
     return (
-        <div className="h-20 flex items-center justify-center text-lg bg-gray-500 font-medium text-gray-900 p-4">
-            <span>@2025 TieuFlow</span>
-        </div>
+        <footer className="flex items-center bg-gray-800 text-gray-400 py-4 h-20">
+            <div className="mx-auto px-4 text-center">
+                <p>Email: danhnt2444@gmail.com</p>
+                <p>@ {new Date().getFullYear()} TiFlo, All rights reserved.</p>
+            </div>
+        </footer>
     );
 }
 

@@ -4,25 +4,46 @@ import { Link } from 'react-router-dom';
 import routes from '~/Routes/routes';
 
 function SignUp() {
-    const [form, setForm] = useState({ username: '', password: '' });
+    const [form, setForm] = useState({ username: '', password: '', confirmPassword: '' });
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const users = JSON.parse(localStorage.getItem('users')) || [];
+        if (!form.username || !form.password || !form.confirmPassword) {
+            alert('All fields are required.');
+            return;
+        }
 
-        const existingUser = users.find((u) => u.username === form.username);
+        if (form.password.length < 6) {
+            alert('Password must be at least 6 characters long.');
+            return;
+        }
 
-        if (existingUser) {
-            alert('Username already exists. Please choose another one.');
-        } else {
-            users.push(form);
+        if (form.password !== form.confirmPassword) {
+            alert('Passwords do not match');
+            return;
+        }
+
+        try {
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+
+            const existingUser = users.find((u) => u.username === form.username);
+
+            if (existingUser) {
+                alert('Username already exists. Please choose another one.');
+                return;
+            }
+
+            // Lưu user mới
+            users.push({ username: form.username, password: form.password }); // Cần hash password
             localStorage.setItem('users', JSON.stringify(users));
 
             alert('Sign Up successful! Please log in.');
-
             navigate(routes.signin);
+        } catch (error) {
+            console.error('Error during sign-up:', error);
+            alert('An error occurred during sign-up. Please try again.');
         }
     };
 
@@ -45,6 +66,14 @@ function SignUp() {
                     placeholder="Enter password"
                     value={form.password}
                     onChange={(e) => setForm((prev) => ({ ...prev, password: e.target.value }))}
+                    className="w-full px-4 py-2 border rounded focus:outline-none"
+                    required
+                />
+                <input
+                    type="password"
+                    placeholder="Re-enter password"
+                    value={form.confirmPassword}
+                    onChange={(e) => setForm((prev) => ({ ...prev, confirmPassword: e.target.value }))}
                     className="w-full px-4 py-2 border rounded focus:outline-none"
                     required
                 />

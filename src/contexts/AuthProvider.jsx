@@ -22,8 +22,11 @@ export function AuthProvider({ children }) {
     const [state, dispatch] = useReducer(reducer, initialState);
 
     useEffect(() => {
-        // Cập nhật lại localStorage khi state thay đổi nếu muốn
-        localStorage.setItem('currentUser', JSON.stringify(state.user));
+        if (state.user) {
+            localStorage.setItem('currentUser', JSON.stringify(state.user));
+        } else {
+            localStorage.removeItem('currentUser');
+        }
     }, [state.user]);
 
     return <AuthContext.Provider value={{ state, dispatch }}>{children}</AuthContext.Provider>;

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import Header from './Header';
 import Sidebar from './Sidebar';
-import Footer from './Footer';
 import { useLocation } from 'react-router-dom';
+import routes from '~/Routes/routes';
 
 function DefaultLayout({ children }) {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -12,12 +12,17 @@ function DefaultLayout({ children }) {
     };
 
     const location = useLocation();
+    const isLandingPage = location.pathname === routes.landing;
     const isAuthPage = ['/signin', 'signup'].includes(location.pathname);
 
     return (
         <div className="min-h-screen flex flex-col overflow-hidden">
             {/* Header */}
-            {!isAuthPage && <Header toggleSidebar={toggleSidebar} />}
+            {!isAuthPage && (
+                <div className={isLandingPage ? 'pointer-events-none' : ''}>
+                    <Header toggleSidebar={toggleSidebar} />
+                </div>
+            )}
 
             <div className="flex flex-1 overflow-hidden">
                 {/* Sidebar */}
@@ -25,16 +30,11 @@ function DefaultLayout({ children }) {
 
                 {/* Main Content */}
                 <main
-                    className={`flex-1 transition-all duration-300 overflow-y-auto p-6 ${
-                        isSidebarOpen ? 'ml-68' : 'ml-0'
-                    }`}
+                    className={`flex-1 transition-all duration-300 overflow-y-auto ${isSidebarOpen ? 'ml-68' : 'ml-0'}`}
                 >
                     {children}
                 </main>
             </div>
-
-            {/* Footer */}
-            {!isAuthPage && <Footer className="mt-auto" />}
         </div>
     );
 }

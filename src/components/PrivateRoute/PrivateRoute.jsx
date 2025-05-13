@@ -6,7 +6,7 @@ function PrivateRoute({ children }) {
     const { state } = useAuth();
 
     if (!state.user) {
-        return <Navigate to={routes.signin} />;
+        return <Navigate to={routes.landing} />;
     }
 
     return children;
