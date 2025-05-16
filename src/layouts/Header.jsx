@@ -1,4 +1,4 @@
-import { faBars, faSearch, faTicket } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faBell, faMessage, faUser } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
@@ -24,11 +24,19 @@ function Header({ toggleSidebar }) {
                         <FontAwesomeIcon icon={faBars} />
                     </button>
                     <Link
-                        className="flex items-center space-x-2 gap-1 transition-transform duration-300 hover:scale-105"
+                        className="flex items-center space-x-2 transition-transform duration-300 hover:scale-105"
                         to={routes.dashboard}
                     >
-                        <FontAwesomeIcon icon={faTicket} className="text-3xl text-gray-600" />
-                        <span className="text-2xl font-extrabold tracking-tight text-gray-600">Tiflo</span>
+                        <img src="/favicon.png" alt="favicon" className="w-10 h-10" />
+                        <span
+                            className="text-2xl font-extrabold tracking-tight"
+                            style={{
+                                color: '#F59E0B',
+                                textShadow: '1px 1px 2px #1E3A8A',
+                            }}
+                        >
+                            Tiflo
+                        </span>
                     </Link>
                 </div>
 

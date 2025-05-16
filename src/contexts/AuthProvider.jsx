@@ -1,17 +1,17 @@
-import { useReducer, useEffect } from 'react';
+import { useReducer, useEffect, useState } from 'react';
 import { AuthContext } from './AuthContext';
 
 const initialState = {
-    user: JSON.parse(localStorage.getItem('currentUser')) || null,
+    user: null,
 };
 
 function reducer(state, action) {
     switch (action.type) {
         case 'LOGIN':
-            localStorage.setItem('currentUser', JSON.stringify(action.payload));
+            sessionStorage.setItem('currentUser', JSON.stringify(action.payload));
             return { user: action.payload };
         case 'LOGOUT':
-            localStorage.removeItem('currentUser');
+            sessionStorage.removeItem('currentUser');
             return { user: null };
         default:
             return state;
@@ -20,14 +20,15 @@ function reducer(state, action) {
 
 export function AuthProvider({ children }) {
     const [state, dispatch] = useReducer(reducer, initialState);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (state.user) {
-            localStorage.setItem('currentUser', JSON.stringify(state.user));
-        } else {
-            localStorage.removeItem('currentUser');
+        const user = JSON.parse(sessionStorage.getItem('currentUser'));
+        if (user) {
+            dispatch({ type: 'LOGIN', payload: user });
         }
-    }, [state.user]);
+        setLoading(false);
+    }, []);
 
-    return <AuthContext.Provider value={{ state, dispatch }}>{children}</AuthContext.Provider>;
+    return <AuthContext.Provider value={{ state, dispatch, loading }}>{children}</AuthContext.Provider>;
 }

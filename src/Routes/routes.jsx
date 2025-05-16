@@ -5,7 +5,6 @@ const routes = {
     signup: '/signup',
     category: '/category',
     transaction: '/transaction',
-    statistical: '/statistical',
     report: '/report',
     setting: '/setting',
 };

@@ -84,13 +84,6 @@ function Sidebar({ isOpen, toggleSidebar }) {
                     <h1 className="text-xs text-green-400 font-semibold mt-4 mb-2">TIỆN ÍCH</h1>
                     <div>
                         <Link
-                            to={routes.statistical}
-                            className="flex items-center gap-2 p-2 hover:bg-gray-800 rounded cursor-pointer"
-                        >
-                            <FontAwesomeIcon icon={faChartSimple} />
-                            Thống kê
-                        </Link>
-                        <Link
                             to={routes.setting}
                             className="flex items-center gap-2 p-2 hover:bg-gray-800 rounded cursor-pointer"
                         >
